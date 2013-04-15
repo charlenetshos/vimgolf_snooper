@@ -19,15 +19,22 @@ class VimGolfScraper(object):
     number_of_entries = re.findall('\d+', entries)
     return number_of_entries[0]
 
+  def _format(self, data):
+    return data.encode(self.ENCODING)
+
   def _get_challenge_content(self, header):
     content = header.find_all(text=True)
-    anchor_title = content[1]
-    number_of_entries = self.extract_number_of_entries(content[2])
-    return anchor_title, number_of_entries
+    anchor_title = self._format(content[1])
+    number_of_entries = self._format(self.extract_number_of_entries(content[2]))
+    return anchor_title, int(number_of_entries)
 
   def challenges(self):
     headers = self._get('h5', {'class': 'challenge'})
+    all_challenges = []
     for header in headers:
       anchor_title, number_of_entries = self._get_challenge_content(header)
+      all_challenges.append({'title': anchor_title, 'entries': number_of_entries})
 
-      print (anchor_title.encode(self.ENCODING), ": ", number_of_entries.encode(self.ENCODING))
+    all_challenges.sort(key=lambda challenge: challenge['entries'], reverse=True)
+    return all_challenges
+
