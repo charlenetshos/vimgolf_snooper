@@ -14,9 +14,8 @@ class Snooper(object):
   def _print(self,output):
     self.out.write(output.format('Challenge', 'Entries') + "\n")
 
-  def formatter(self, challenges):
-    MIN_SPACE = 5
-    output = "{0:<%s} {1}" % (gself._length_of_longest(challenges) + MIN_SPACE)
+  def _apply_format(self, challenges, min_space):
+    output = "{0:<%s} {1}" % (self._length_of_longest(challenges) + min_space)
 
     self._print(output)
     self._print(output.format(''.ljust(len('Challenge'), '-'), ''.ljust(len('Entries'), '-')))
@@ -26,7 +25,7 @@ class Snooper(object):
 
   def main(self):
     challenges = VimGolfScraper().challenges()
-    self.formatter(challenges)
+    self._apply_format(challenges, min_space=5)
 
 
 if __name__ == '__main__':
