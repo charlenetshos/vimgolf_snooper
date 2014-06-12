@@ -12,7 +12,12 @@ class Snooper(object):
     return max(lengths_of_challenges_titles)
 
   def _print(self,output):
-    self.out.write(output.format('Challenge', 'Entries') + "\n")
+      try:
+        self.out.write(output.format('Challenge', 'Entries') + "\n")
+      except:
+        # will be leaving app now
+        pass
+
 
   def _apply_format(self, challenges, min_space):
     output = "{0:<%s} {1}" % (self._length_of_longest(challenges) + min_space)
