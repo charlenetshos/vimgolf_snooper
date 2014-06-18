@@ -6,14 +6,13 @@ class VimGolfScraper(object):
   def __init__(self):
     self.URL = 'http://www.vimgolf.com'
     self.ENCODING = 'utf-8'
-    self.soup = BeautifulSoup(urllib.urlopen(self.URL))
-
 
   def url(self):
     return self.URL
 
   def _get(self, tag, attrs):
-    return self.soup.find_all(tag, attrs=attrs)
+    soup = BeautifulSoup(urllib.urlopen(self.URL))
+    return soup.find_all(tag, attrs=attrs)
 
   def extract_number_of_entries(self, entries):
     number_of_entries = re.findall('\d+', entries)
