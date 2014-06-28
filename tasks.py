@@ -19,12 +19,17 @@ def all():
     print "Running all tests..."
     run("python -m unittest discover -s tests -p 'test_*.py'")
 
+@task
+def start():
+    run(". .vimgolf_ve/bin/activate && python snooper.py")
+    
+
 tests = Collection(unit, integration, all)
 
 ns = Collection()
 ns.add_collection(tests, 'test')
 
-other_tasks = ['install_dependencies']
+other_tasks = ['install_dependencies', 'start']
 
 for task in other_tasks:
     ns.add_task(eval(task))
